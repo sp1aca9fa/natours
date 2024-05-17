@@ -1,0 +1,85 @@
+extends base
+
+//- Xx: changing repated code to a mixin
+mixin navItem(link, text, icon, active)
+  //- Xx: turnery statement if its active should get side-nav--active; if not, should not get anything
+  li(class=`${active ? 'side-nav--active' : ''}`)
+    a(href=`${link}`)
+      svg
+        use(xlink:href=`img/icons.svg#icon-${icon}`)
+        //- Xx: creating template statements in pug code using #{} (=`${}` is js)
+      | #{text}
+
+block content
+  main.main
+    .user-view
+      nav.user-view__menu
+        ul.side-nav
+          //- Xx: an example of code being replaced by the mixin
+          //- li.side-nav--active
+          //-   a(href='#')
+          //-     svg
+          //-       use(xlink:href='img/icons.svg#icon-settings')
+          //-     | Settings
+          +navItem('#', 'Settings', 'settings', true)
+          +navItem('/my-bookings', 'My Bookings', 'briefcase')
+          +navItem('#', 'My reviews', 'star')
+          +navItem('#', 'Billing', 'credit-card')
+        
+        - if (user.role === 'admin')
+          //- Xx: We will pass the user object into this page, so we will have access to the role
+          .admin-nav
+            h5.admin-nav__heading Admin menu
+            ul.side-nav
+              +navItem('#', 'Manage tours', 'map')
+              +navItem('#', 'Manage users', 'users')
+              +navItem('#', 'Manage reviews', 'star')
+              +navItem('#', 'Manage bookings', 'briefcase')
+
+      .user-view__content
+        .user-view__form-container
+          h2.heading-secondary.ma-bt-md Your account settings
+                //- Xx: this is one way to post from data from html to the server without going through the API; Jonas does not recommend it, but it might be needed or best in some cases
+                //- Xx: the data gets submitted to /submit-user-data once we click the button in the form below
+                //- Xx: the second step to make this method working is to specify name properties in the fields we want to send (the values will be sent with a request based on their name attributes)
+                //- Xx: we also need to include app.use(express.urlencoded({ extended: true, limit: '10kb' })) in app.js to parse encoded url content from this form
+                //- Xx: this comment is above the relevant part because pug is a bitch
+          //- WITHOUT API
+          //- form.form.form-user-data(action='/submit-user-data' method='POST')
+
+          //- WITH API
+          form.form.form-user-data
+            .form__group
+              label.form__label(for='name') Name
+              input#name.form__input(type='text', value=`${user.name}`, required, name='name')
+            .form__group.ma-bt-md
+              label.form__label(for='email') Email address
+              input#email.form__input(type='email', value=`${user.email}`, required, name='email')
+            .form__group.form__photo-upload
+              img.form__user-photo(src=`img/users/${user.photo}`, alt='User photo')
+              input.form__upload(type='file', accept='image/*', id='photo', name='photo')
+              //- Xx: changed the placeholder choose photo to the actual input where users will upload the photo
+              //- Xx: type file, meaning the users will input a file, and accept "image/*", again anything that mimetype recognizes as image, like with the first console.log of req.file "image/jpeg"
+              label(for='photo') Upload new photo
+              //- Xx: when we click "label", it will activate the input element that we specify with "for"
+              //- Xx: similar to updating the account, there are 2 ways to upload the image, with and without the API
+              //- Xx: form.form.form-user-data(action='/submit-user-data' method='POST' enctype='multipart/form-data', as we are sending a file, need to include enctype='multipart/form-data', otherwise the file would not be received)
+            .form__group.right
+              button.btn.btn--small.btn--green Save settings
+
+        .line &nbsp;
+
+        .user-view__form-container
+          h2.heading-secondary.ma-bt-md Password change
+          form.form.form-user-password
+            .form__group
+              label.form__label(for='password-current') Current password
+              input#password-current.form__input(type='password', placeholder='••••••••', required, minlength='8')
+            .form__group
+              label.form__label(for='password') New password
+              input#password.form__input(type='password', placeholder='••••••••', required, minlength='8')
+            .form__group.ma-bt-lg
+              label.form__label(for='password-confirm') Confirm password
+              input#password-confirm.form__input(type='password', placeholder='••••••••', required, minlength='8')
+            .form__group.right
+              button.btn.btn--small.btn--green.btn--save-password Change password

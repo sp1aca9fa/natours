@@ -1,0 +1,50 @@
+doctype html
+html
+  head
+    block head
+      //- Xx: usually creating a block makes all content inside vanish, but we are using blockk append head in tour, so the contents below will be added
+      meta(charset='UTF-8')
+      meta(name='viewport' content='width=device-width, initial-scale=1.0')
+      //- title Natours | #{tour}
+      //- Xx: setting up text templates in variables: we can't use the = symbol or the entire text will be treated as code; also, the variables should be use with #{}, not with ${}
+      //- <link rel="stylesheet" href="css/style.css" /> Xx: in html, you would create a link element, define that it is a stylesheet and set the reference
+      link(rel='stylesheet' href='/css/style.css')
+      //- Xx: you can use normal html in pug too
+      link(rel='shortcut icon' type='image/png' href='/img/favicon.png')
+      //- Xx: files come automatically from the public folder because we set it in the app.js
+      link(rel='stylesheet' href='https://fonts.googleapis.com/css?family=Lato:300,300i,700')
+      title Natours | #{title}
+      //- Xx: interpolation with the variable/local to get the title (from app.js)
+
+  body
+    //- h1= tour
+    //- h2= user.toUpperCase()
+    //- //- Xx: buffered code is written in the format above (using an = and one space after the = only)
+    //- //- Xx: getting the data passed onto to pug
+    //- //-h1 The Park Camper
+    //- //- Xx: The above will create the following code in html: <h1>The Park Camper</h1>
+    //- //- Xx: Pug also allows us to insert variables and etc
+    //- p This is just some text
+
+
+    //- - const x = 9
+    //- //- Xx: this is unbuffered code, wont display in the html but we can run js
+    //- h2= 2 * x
+
+    // HEADER
+    include _header
+
+    // CONTENT
+    block content
+      h1 This is a placeholder heading
+
+    // FOOTER
+    include _footer
+
+    //- script(src='https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.8/axios.min.js')
+    //- //- Xx: duplicate line in vscode: shift + alt + up/down
+    //- //- Xx: the line above exposes an Axious object to the global scope so we can use it in our login function
+    //- script(src='/js/leaflet.js')
+    //- script(src='/js/login.js')
+    script(src='https://js.stripe.com/v3/')
+    script(src='/js/bundled/index.js')

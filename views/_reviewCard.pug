@@ -1,0 +1,11 @@
+mixin reviewCard(review)
+  .reviews__card
+    .reviews__avatar
+      img.reviews__avatar-img(src=`/img/users/${review.user.photo}`, alt=`${review.user.name}`)
+      h6.reviews__user= review.user.name
+    p.reviews__text= review.review
+    .reviews__rating
+      each star in [1, 2, 3, 4, 5]
+        //- Xx: looping the review rating to checkk if its greater than 1 to 5; if 3/5, when the loop tests 4, the test will be 3 >= 4, so it will return false and use 'inactive'
+        svg.reviews__star(class=`reviews__star--${review.rating >= star ? 'active' : 'inactive' }`)
+          use(xlink:href='/img/icons.svg#icon-star')
