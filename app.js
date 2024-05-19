@@ -8,6 +8,7 @@ const xss = require('xss-clean');
 const hpp = require('hpp');
 const cookieParser = require('cookie-parser');
 const compression = require('compression');
+const cors = require('cors');
 
 const AppError = require('./utils/appError');
 const globalErrorHandler = require('./controllers/errorController');
@@ -28,6 +29,26 @@ app.set('views', path.join(__dirname, 'views')); // Xx: it's not ideal to set fi
 // Xx: path.join is used instead of just __dirname because we dont know if the path from __dirname will have the / at the end or not and this is a common cause for bugs
 
 // 1) GLOBAL MIDDLEWARES
+
+// Implement CORS Xx: (cross-origin requests, to allow not only a browser to connect to our api/website, but also other aplications and websites)
+// Xx: CORS is anything other than a user accessing the browser; even requests from a different port would be considered CORS
+// Xx: also commonly when you have different servers, domains or even subdomains (for example, api.natours.com and natours.com) to handle the API and the website host, that would be considered CORS too
+// Xx: so generally the websites would want CORS to increase reach
+app.use(cors()); // Xx: returns a middleware function that will add some headers to the response
+// Access-Control-Allow-Origin *
+// Xx: could use cors only a specific route, for example app.use('/api/v1/tours', cors(), tourRouter);
+// app.use(
+//   cors({
+//     origin: 'https://www.natours.com',
+//   }),
+// );
+// Xx: above is an example if our api was in a different subdomain from the website and we only want to allow our api to accept CORS from the website
+app.options('*', cors());
+// Xx: app.options is similar to app.get, app.post, patch, etc. Options is an HTTP method derived from non-simple requests (simple requests being GET and POSTs; non-simple are: PUT, PATCH and DELETE requests).
+// Xx: non-simple requests start a preflight phase, which is the browser sending an options request to figure out if the actual request is safe to send, so we need to respond to options requests from server too.
+// Xx: when we get option requests we need to send Access-Control-Allow-Origin headers, so the browser knows the request is safe to perform.
+// Xx: if we dont, cors for non-simple requests wont work.
+// Xx: * means it applies in all routes; we could apply it only to specific routes, for example: app.options('/api/v1/tours/:id, cors()), so you could only do CORS to delete/patch tours
 
 // Serving static files
 // app.use(express.static(`${__dirname}/public`));
