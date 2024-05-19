@@ -86,4 +86,4 @@ if (bookBtn)
 //- Xx: then we will have a middleware which will take that keyword from the url and will put an alert message on response.locals
 //- Xx: finally we will then implement it in index.js
 const alertMessage = document.querySelector('body').dataset.alert;
-if (alert) showAlert('success', alertMessage);
+if (alertMessage) showAlert('success', alertMessage);
