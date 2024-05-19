@@ -79,3 +79,11 @@ if (bookBtn)
     // Xx: anything coming after data- will convert like that (data-tour-id becomes tourId)
     bookTour(tourId); // Xx: with this the tourId should get passed into the url to be used in the call by axios which in turn should return a checkout session
   });
+
+//- Xx: (data-alert=`${alert ? alert : ''}`) if there is an alert use the alert; otherwise display nothing;
+//- Xx: this is the first step to allow displaying the booking successful alert.
+//- Xx: then we will include an alert keyword in the query string
+//- Xx: then we will have a middleware which will take that keyword from the url and will put an alert message on response.locals
+//- Xx: finally we will then implement it in index.js
+const alertMessage = document.querySelector('body').dataset.alert;
+if (alert) showAlert('success', alertMessage);

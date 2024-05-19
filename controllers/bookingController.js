@@ -13,7 +13,7 @@ exports.getCheckoutSession = catchAsync(async (req, res, next) => {
   const session = await stripe.checkout.sessions.create({
     // Xx: 'create' will return a promise because setting all the options will basically do an API call to Stripe, so it needs to be awaited, so the whole function should be made async
     payment_method_types: ['card'],
-    success_url: `${req.protocol}://${req.get('host')}/my-bookings`,
+    success_url: `${req.protocol}://${req.get('host')}/my-bookings?alert=success`,
     // success_url: `${req.protocol}://${req.get('host')}/?tour=${req.params.tourId}&user=${req.user.id}&price=${tour.price}`,
     // Xx: when the site is deployed, we would get access to the session object once the purchase is completed using Stripe Webhooks, so that would be perfect to create a booking
     // Xx: since the site is not deployed, we will do an unsafe work around, which is passing the details of the booking as a query in the success_url string, to get the details to create the booking

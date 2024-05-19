@@ -16,7 +16,13 @@ html
       title Natours | #{title}
       //- Xx: interpolation with the variable/local to get the title (from app.js)
 
-  body
+  //- Xx: (data-alert=`${alert ? alert : ''}`) if there is an alert use the alert; otherwise display nothing;
+  //- Xx: this is the first step to allow displaying the booking successful alert.
+  //- Xx: then we will include an alert keyword in the query string
+  //- Xx: then we will have a middleware which will take that keyword from the url and will put an alert message on response.locals
+  //- Xx: finally we will then implement it in index.js
+
+  body(data-alert=`${alert ? alert : ''}`)
     //- h1= tour
     //- h2= user.toUpperCase()
     //- //- Xx: buffered code is written in the format above (using an = and one space after the = only)

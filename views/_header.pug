@@ -2,9 +2,9 @@ header.header
   //- Xx: to define a class, we do .class, like header.header in the line above
   nav.nav.nav--tours
     //- Xx: in the original code, nav is the block, --tours is a modifier and __ means that something is an element
-    a.nav__el(href='/') #{title}
+    a.nav__el(href='#') #{title}
       //- Xx: href attribute; href is empty/nothing, that's what the hash means
-  .header__logo
+  a.header__logo(href='/')
     //- Xx: when the element is a div, we can write it simply as a dot; div is the standard element in html
     img(src='/img/logo-white.png' alt='Natours logo')
       //- Xx: src is source and alt is the alt text
