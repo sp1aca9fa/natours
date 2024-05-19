@@ -17,6 +17,7 @@ const userRouter = require('./routes/userRoutes');
 const reviewRouter = require('./routes/reviewRoutes');
 const viewRouter = require('./routes/viewRoutes');
 const bookingRouter = require('./routes/bookingRoutes');
+const bookingController = require('./controllers/bookingController');
 
 // Start express app
 const app = express();
@@ -98,6 +99,9 @@ const limiter = rateLimit({
   message: 'Too many requests from this IP, please try again in an hour!',
 });
 app.use('/api', limiter);
+
+app.post('/webhook-checkout', express.raw({ type: 'application/json' }), bookingController.webhookCheckout);
+// Xx: needs to be added here instead of routes, so it does not pass through the parsers and is received as simple text, not json
 
 // Body parser, reading data from body into req.body
 app.use(express.json({ limit: '10kb' })); // Xx: setting req.body limit to 10kb; if you need to accept files, max file size would need to be considered here too, unless I use a specific link to have a greater limit, link /api or etc

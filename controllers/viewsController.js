@@ -47,7 +47,7 @@ exports.getLoginForm = (req, res) => {
     // Xx: dont remember why I added the above, but then had to add ws://127.0.0.1:*/ because of a console error in the client
     // Xx: but removing it apparently results in no errors, so just leaving it here
     .render('login', {
-      title: 'Log into your account',
+      title: 'Login',
     });
 };
 

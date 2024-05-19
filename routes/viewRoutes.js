@@ -1,7 +1,7 @@
 const express = require('express');
 const viewsController = require('../controllers/viewsController');
 const authController = require('../controllers/authController');
-const bookingController = require('../controllers/bookingController');
+// const bookingController = require('../controllers/bookingController');
 
 const router = express.Router();
 
@@ -18,7 +18,8 @@ const router = express.Router();
 // router.use(authController.isLoggedIn); // Xx: will apply to all routes below
 // Xx: removed the isLoggedIn applying to following lines, as we dont want isLoggedIn to run when we are running protect, since it is a lot of duplicate code and includes duplicate query
 
-router.get('/', bookingController.createBookingCheckout, authController.isLoggedIn, viewsController.getOverview); // Xx: the createBookingCheckout is before other middlewares as a temporary solution, need to do a better implementation/require authentication/protection once deploying the website
+// router.get('/', bookingController.createBookingCheckout, authController.isLoggedIn, viewsController.getOverview); // Xx: the createBookingCheckout is before other middlewares as a temporary solution, need to do a better implementation/require authentication/protection once deploying the website
+router.get('/', authController.isLoggedIn, viewsController.getOverview); // Xx: removing createBookingCheckout as no longer needed after safe implementation
 router.get('/tour/:slug', authController.isLoggedIn, viewsController.getTour);
 router.get('/login', authController.isLoggedIn, viewsController.getLoginForm);
 router.get('/me', authController.protect, viewsController.getAccount);
