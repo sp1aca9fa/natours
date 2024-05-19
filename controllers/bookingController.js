@@ -65,8 +65,8 @@ exports.getCheckoutSession = catchAsync(async (req, res, next) => {
 // Xx: createBookingCheckout is now a regular function which will accept all the session data from getCheckoutSession
 const createBookingCheckout = async (session) => {
   const tour = session.client_reference_id;
-  const user = (await User.findOne({ email: session.customer_email })).id; // Xx: this will bring the object so we wrap everything in () and get its id
-  const price = session.line_items[0].price_data.unit_amount / 100;
+  const user = (await User.findOne({ email: session.customer_email }))._id; // Xx: this will bring the object so we wrap everything in () and get its id
+  const price = session.amount_total / 100;
   await Booking.create({ tour, user, price });
 };
 
