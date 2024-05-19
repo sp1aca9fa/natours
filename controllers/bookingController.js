@@ -34,7 +34,7 @@ exports.getCheckoutSession = catchAsync(async (req, res, next) => {
           product_data: {
             name: `${tour.name} Tour`,
             description: tour.summary,
-            images: [`https://www.natours.dev/img/tours/${tour.imageCover}`], // Xx: similar to client_reference_id, can only really be used when the website is deployed (on an existing domain), because Stripe uploads the images to their own database, but specifying anyway
+            images: [`${req.protocol}://${req.get('host')}/img/tours/${tour.imageCover}`], // Xx: similar to client_reference_id, can only really be used when the website is deployed (on an existing domain), because Stripe uploads the images to their own database, but specifying anyway
             // Xx: using the images from the natours.dev website publicly available
           },
           // Xx: the field names here are already pre-defined by Stripe, cannot 'invent' new fields, will throw an error
@@ -83,7 +83,7 @@ exports.webhookCheckout = (req, res, next) => {
     // Xx: Jonas returned the error message to the sender saying the sender would be stripe, but I think what if someone tries to send it instead, so prefer to console.log the err.message
   }
 
-  if (event.type === 'checkout.session.complete') {
+  if (event.type === 'checkout.session.completed') {
     createBookingCheckout(event.data.object); // Xx: event type that we defined in the stripe dashbboard when we created the webhook
     res.status(200).json({ received: true }); // Xx: again different from Jonas, only sending "received: true" if checkout.session.complete, but I still think an attacker could simulate this?
   }

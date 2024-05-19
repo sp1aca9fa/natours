@@ -22,7 +22,7 @@ const bookingController = require('./controllers/bookingController');
 // Start express app
 const app = express();
 
-app.enable('trust proxy');
+// app.enable('trust proxy'); Xx: turned off, as render says this trivially allows anyone to bypass IP rate limiter
 
 app.set('view engine', 'pug'); // Xx: setting the template engine to pug
 app.set('views', path.join(__dirname, 'views')); // Xx: it's not ideal to set file locations in the usual pattern (example, './views'), as this is the directory where we start the app from
