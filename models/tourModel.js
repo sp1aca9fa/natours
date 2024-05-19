@@ -218,10 +218,11 @@ tourSchema.pre('aggregate', function (next) {
 // });
 
 // Xx: since it is post query then it has access to all the docs from the query
-tourSchema.post(/^find/, function (docs, next) {
-  console.log(`Query took ${Date.now() - this.start} milliseconds!`);
-  next();
-});
+// Xx: commented off, since the purpose was only to test post find middleware
+// tourSchema.post(/^find/, function (docs, next) {
+//   console.log(`Query took ${Date.now() - this.start} milliseconds!`);
+//   next();
+// });
 
 const Tour = mongoose.model('Tour', tourSchema);
 

@@ -11,7 +11,8 @@ export const login = async (email, password) => {
     // Xx: axios is the module responsible to send the calls from front to back
     const res = await axios({
       method: 'POST',
-      url: 'http://127.0.0.1:3000/api/v1/users/login',
+      // url: 'http://127.0.0.1:3000/api/v1/users/login',
+      url: '/api/v1/users/login', // Xx: changed from a fixed url to a relative URL, so it will look for this link within the current URL
       data: {
         email, // Xx: frontend is sending an email property and backend is also expecting an email property, so leaving it as just email works
         password,
@@ -33,13 +34,14 @@ export const logout = async () => {
   try {
     const res = await axios({
       method: 'GET',
-      url: 'http://127.0.0.1:3000/api/v1/users/logout',
+      url: '/api/v1/users/logout',
     });
     // Xx: reload the page so the user does not see the page as logged in even tho they logged out
     // Xx: test if the received data is success
     if (res.data.status === 'success') location.reload(true); // Xx: the true is really important otherwise it would reload from cash and would still have the logged in page
   } catch (err) {
     // Xx: usually there wouldnt be any errors when logging out, but just in case, for example, in case there is no connection
+    console.log(err.response);
     showAlert('error', 'Error logging out! Try again.');
   }
 };

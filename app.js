@@ -7,6 +7,7 @@ const mongoSanitize = require('express-mongo-sanitize');
 const xss = require('xss-clean');
 const hpp = require('hpp');
 const cookieParser = require('cookie-parser');
+const compression = require('compression');
 
 const AppError = require('./utils/appError');
 const globalErrorHandler = require('./controllers/errorController');
@@ -94,6 +95,8 @@ app.use(
     whitelist: ['duration', 'ratingsAverage', 'ratingsQuantity', 'maxGroupSize', 'difficulty', 'price'],
   }),
 );
+
+app.use(compression()); // Xx: compresses text responses sent to client (both html and JSON), significantly reducing size. Only works for text, doesnt work for images for example.
 
 // Test middleware
 app.use((req, res, next) => {
