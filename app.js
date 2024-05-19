@@ -42,6 +42,7 @@ const connectSrcUrls = [
   'https://tile.openstreetmap.org',
   'https://stripe.com/',
   'ws://127.0.0.1:*/',
+  'wss://natours-t6yl.onrender.com:*/',
 ];
 const fontSrcUrls = ['fonts.googleapis.com', 'fonts.gstatic.com'];
 
