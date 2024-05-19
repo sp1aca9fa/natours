@@ -1,5 +1,6 @@
 /* eslint-disable */
-import '@babel/polyfill';
+import 'core-js/stable';
+import 'regenerator-runtime/runtime';
 import { displayMap } from './leaflet';
 // const displayMap = require('./leaflet'); // Xx: this is the way to 'require' when working on JS Xx: testing multiple times what would make leaflet stop giving unexpected import errors; solution was to include "type='module' " when importing the script in tour.pug
 import { login, logout } from './login';
