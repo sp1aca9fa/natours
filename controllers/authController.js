@@ -23,8 +23,16 @@ const createLoginToken = catchAsync(async (req, user, statusCode, res) => {
   const cookieOptions = {
     expires: new Date(Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000),
     httpOnly: true,
+    secure: req.secure || req.headers['x-forwarded-proto'] === 'https',
+    // Xx: simplifying the code even further than below, instead of putting it outside of cookieOptions, just set it to here based on the boolean result of the statement
   };
-  if (process.env.NODE_ENV === 'production') cookieOptions.secure = true;
+  // Xx: need to change from the above; in some cases, the application is not delivered securely by the deploying service, so this if specifically checks if the connection is secure.
+  // Xx: need to change from the above; in some cases, the application is not delivered securely by the deploying service, so this if specifically checks if the connection is secure.
+  // Xx: req.secure would check if the request is secure, but Heroku, for example, forwards all requests internally, so checking if it has a forwarded header; not sure exactly how it works for render, but should be similar?
+  // if (process.env.NODE_ENV === 'production') cookieOptions.secure = true;
+  // if (req.secure || req.headers['x-forwarded-proto'] === 'https') cookieOptions.secure = true;
+  // cookieOptions.secure = req.secure || req.headers['x-forwarded-proto'] === 'https'; // Xx: instead of doing an if, just set the cookies.secure to the boolean resulting from the sentence; if its true, then cookies.secure = true, cause the statement is true
+
   res.cookie('jwt', token, cookieOptions);
 
   if (!req.get('Content-Type') === 'application/json') {

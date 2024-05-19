@@ -1,3 +1,5 @@
 node_modules/
 *.env
 .parcel-cache/
+controllers/authController_old.js
+app - old 20240409.js
