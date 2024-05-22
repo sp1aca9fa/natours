@@ -1624,3 +1624,102 @@ body {
     flex: 0 1 auto; /* Prevent buttons from growing too large */
   }
 }
+
+/* Adjustments for header on smartphone screens */
+@media only screen and (max-width: 768px) {
+  .header {
+    background-color: #444;
+    padding: 0 1rem;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .nav--tours,
+  .nav--user {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .header__logo {
+    margin: 1rem 0;
+  }
+
+  .nav__el2,
+  .nav__el {
+    flex: 1;
+    text-align: center;
+  }
+
+  .nav__user-img {
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+  }
+
+  .card-container {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+    padding: 0;
+  }
+
+  .card {
+    width: 100%;
+    max-width: none;
+    margin: 0;
+    box-sizing: border-box;
+  }
+}
+
+/* General Navigation Bar Styles */
+.nav-links {
+  display: flex;
+  justify-content: flex-end;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.nav-links li {
+  margin-left: 20px;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: #333;
+}
+
+/* Responsive Styles */
+@media screen and (max-width: 768px) {
+  .nav-links {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .nav-links li {
+    margin: 10px 0;
+  }
+}
+
+/* Container and Item Styles */
+.container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.item {
+  flex: 1 1 50%;
+  padding: 10px;
+}
+
+/* Responsive Styles */
+@media screen and (max-width: 768px) {
+  .item {
+    flex: 1 1 100%;
+  }
+}

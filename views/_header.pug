@@ -1,25 +1,14 @@
 header.header
-  //- Xx: to define a class, we do .class, like header.header in the line above
   nav.nav.nav--tours
-    //- Xx: in the original code, nav is the block, --tours is a modifier and __ means that something is an element
     .nav__el2 #{title}
-      //- Xx: href attribute; href is empty/nothing, that's what the hash means
   a.header__logo(href='/' title='Home')
-    //- Xx: when the element is a div, we can write it simply as a dot; div is the standard element in html
     img(src='/img/logo-white.png' alt='Home')
-      //- Xx: src is source and alt is the alt text
   nav.nav.nav--user
     if user
       a.nav__el.nav__el--logout Log out
-      //- Log out does not have href because we added the function to logout in index.js
       a.nav__el(href='/me')
         img.nav__user-img(src=`/img/users/${user.photo}` alt=`Photo of ${user.name}`)
         span= user.name.split(' ')[0]
-        //- split by space and then get only the first resulting element (first name)
     else
-      //- Xx: pug conditionals are not very powerful and we need to use js in many cases, but in this case, pug conditional is enough
-      //- Xx: getting user details from isLoggedIn
       a.nav__el(href=`/login`) Log in
-      //- Xx: cannot specify a link to a button element so changed from button to a
       a.nav__el.nav__el--cta(href='#') Sign up
-      //- Xx: he decided not to implement sign up page because it would be similar to login; maybe something I can do by myself
