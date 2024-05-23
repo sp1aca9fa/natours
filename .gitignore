@@ -4,4 +4,7 @@ node_modules/
 controllers/authController_old.js
 app - old 20240409.js
 dev-data/
-views/_header W COMMENTS.pug
+views/_header_W COMMENTS.pug
+views/_footer_W COMMENTS.pug
+views/account_W COMMENTS.pug
+public/js/index_W COMMENTS.js
