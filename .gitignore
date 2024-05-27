@@ -4,12 +4,7 @@ node_modules/
 controllers/authController_old.js
 app - old 20240409.js
 dev-data/
-<<<<<<< HEAD
 views/_header_W COMMENTS.pug
 views/_footer_W COMMENTS.pug
 views/account_W COMMENTS.pug
-views/tour_W COMMENTS.pug.pug
 public/js/index_W COMMENTS.js
-=======
-views/_header W COMMENTS.pug
->>>>>>> parent of 514e099 (Implementing view in mobile devices - 2)
