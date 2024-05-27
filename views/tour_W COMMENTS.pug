@@ -2,10 +2,20 @@ extends base
 include _reviewCard
 
 block append head
+  //- Xx: whatever we write to this block will be appended to the content that is already in that block
+  //- Xx: we could also use prepend so the contents from this code would be added to the beginning of the block
+  //- script(src='/js/mapbox.js')
+  //- Xx: had to move the script to the bottom of the page because the map with the js would not be loaded by the time the DOM runs the head, so the code would not work
+  //- Xx: from Q&A by Hiroshi
   link(rel='stylesheet' href='/lib/leaflet.css')
   script(type='module' src='/lib/leaflet.js' defer) 
   script(type='module' src='/js/leaflet.js' defer)
+  //- Xx: testing multiple times what would make leaflet stop giving unexpected import errors; solution was to include "type='module' " when importing the script in tour.pug
+  //- script(src='https://js.stripe.com/v3/')
+  //- Xx: adding the stripe object in tour.pug so we can use that in stripe.js
+  //- Xx: moving stripe to all pages due to undefined error per video (tho I had already solved the issue with a different solution from Q&A)
 
+//- Xx: mixin is a variable in pug (also works in css I think?), so we can use it to avoid repeated code
 mixin overviewBox(label, text, icon)
   .overview-box__detail
     svg.overview-box__icon
@@ -38,7 +48,9 @@ block content
         .overview-box__group
           h2.heading-secondary.ma-bt-lg Quick facts
           
+          //- Xx: use - to do js that wont produce any output
           - const date = tour.startDates[0].toLocaleString('en-us', {day: 'numeric', month: 'short', year: 'numeric'})
+          //- Xx: use + to call a mixin
           +overviewBox('Next date', date, 'calendar')
           +overviewBox('Difficulty', tour.difficulty, 'trending-up')
           +overviewBox('Participants', `${tour.maxGroupSize} people`, 'user')
@@ -64,17 +76,25 @@ block content
 
   section.section-pictures
     each img, i in tour.images
+      //- Xx: in a pug loop we can define a 2nd variable; we define the index as i (0 for the first element, 1 for the 2nd, etc)
       .picture-box
+        //- Xx: original code: img.picture-box__img.picture-box__img--1(src=`/img/tours/${img}`, alt=`${tour.name} Tour ${i + 1}`); changed the .picture-box__img--1 to inside the () so that we can introduce a variable
         img.picture-box__img(src=`/img/tours/${img}`, alt=`${tour.name} Tour ${i + 1}`, class=`picture-box__img--${i + 1}`)
   
   section.section-map
     #map(data-locations=`${JSON.stringify(tour.locations)}`)
+      //- Xx: As we are running the template we already have all the tour data, so instead of calling the API again (AJAX), we simply run some html to access the data we need, so we can use that data in js
+      //- Xx: the above specifies a data attribute in html and read the attribute that data in javascript
+      //- Xx: data is the call? I think and locations is simply how we want to call the data
+      //- Xx: the data will get stored in the dataset property (dataset.locations) because its called data-
+
 
   section.section-reviews
     .reviews
       each review in tour.reviews
         +reviewCard(review)
 
+  //- cta is call to action
   section.section-cta
     .cta
       .cta__img.cta__img--logo
@@ -87,5 +107,8 @@ block content
         
         if user
           button.btn.btn--green.span-all-rows#book-tour(data-tour-id=`${tour.id}`) Book tour now!
+          //- Added #book-tour() to send tourID to the checkout session
+          //- to specify the tour id, we use (data-) and include the data we need
         else
           a.btn.btn--green.span-all-rows(href='/login') Log in to book tour
+          //- Xx: changed from button to a element. a element is anchor (meaning it has a link)
